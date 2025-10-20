@@ -1,6 +1,6 @@
 [project]
 name = "AudioNormalizer"
-version = "0.0.1"
+version = "0.0.3"
 description = "A user-friendly GUI application for batch audio normalization, allowing you to process large numbers of files quickly and efficiently."
 authors = [{ name="Enetz Quindimil", email="enetzquindimil@gmail.com" }]
 dependencies = ["PyQt6"]

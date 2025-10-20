@@ -1,6 +1,15 @@
-[project]
+[tool.poetry]
 name = "AudioNormalizer"
-version = "0.0.4"
+version = "0.0.5"
 description = "A user-friendly GUI application for batch audio normalization, allowing you to process large numbers of files quickly and efficiently."
-authors = [{ name="Enetz Quindimil", email="enetzquindimil@gmail.com" }]
-dependencies = ["PyQt6"]
+authors = ["Enetz Quindimil <enetzquindimil@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+PyQt6 = ">=6.9.1"
+pydub = ">=0.25.1"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,89 @@
+name: Build Executables
+
+# Trigger on tags like v1.0.0-release
+on:
+  push:
+    tags:
+      - 'v*-release'
+  workflow_dispatch:
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --no-dev
+      - name: Build Windows x64 executable
+        run: pyinstaller --onefile --windowed --name AudioNormalizer main.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-x64
+          path: dist/AudioNormalizer.exe
+
+  build-windows-x86:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python (32-bit)
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --no-dev
+      - name: Build Windows x86 executable
+        run: pyinstaller --onefile --windowed --name AudioNormalizer main.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-x86
+          path: dist/AudioNormalizer.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --no-dev
+      - name: Build macOS app
+        run: pyinstaller --onefile --windowed --name AudioNormalizer main.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-app
+          path: dist/AudioNormalizer.app
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --no-dev
+      - name: Build Linux executable
+        run: pyinstaller --onefile --name AudioNormalizer main.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-exe
+          path: dist/AudioNormalizer

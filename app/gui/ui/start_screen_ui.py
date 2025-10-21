@@ -2,7 +2,6 @@ from PyQt6.QtWidgets import QPushButton, QWidget, QVBoxLayout
 
 class StartScreenUI:
     def setup_ui(self, window):
-        window.setWindowTitle("Full Screen Button Window")
 
         # Central widget
         central_widget = QWidget()

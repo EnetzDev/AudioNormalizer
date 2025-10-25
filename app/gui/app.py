@@ -1,16 +1,17 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
 
 from .ui.start_screen_ui import StartScreenUI
 from .controllers.start_screen_controller import StartScreenController
-from app.core.utils import resource_path
+from .utils import windows_config
+
 
 def start_gui():
     app = QApplication(sys.argv)
+
     window = QMainWindow()
-    window.setWindowTitle("Audio Normalizer")
-    window.setWindowIcon(QIcon(resource_path("logo.png")))
+    window.setWindowTitle("ANorm")
 
     # Set up the UI
     ui = StartScreenUI()
@@ -19,9 +20,15 @@ def start_gui():
     # Connect UI with logic
     controller = StartScreenController(ui)
 
-    # Maximize
+    # Show window
+    window.show()
     window.showMaximized()
 
-    # Show window and start the event loop
-    window.show()
+    if sys.platform == "win32":
+        windows_config(window)
+    elif sys.platform == "darwin":
+        app.setWindowIcon(QIcon(QPixmap(resource_path("icon.icns"))))
+    else:
+        app.setWindowIcon(QIcon(QPixmap(resource_path("icon.png"))))
+
     sys.exit(app.exec())

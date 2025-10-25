@@ -34,11 +34,11 @@ jobs:
       - name: Build executable
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            pyinstaller --onefile --windowed --name AudioNormalizer main.py
+            pyinstaller --clean --onefile --windowed --icon=app/resources/favicon.ico --add-data "app/resources/*;app/resources" --name Anorm main.py
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            pyinstaller --onefile --windowed --name AudioNormalizer main.py
+            pyinstaller --clean --onefile --windowed --icon=app/resources/favicon.icns --add-data "app/resources/*;app/resources" --name Anorm main.py
           else
-            pyinstaller --onefile --name AudioNormalizer main.py
+            pyinstaller --clean --onefile --windowed --icon=app/resources/favicon.png --add-data ""app/resources/*;app/resources" --name Anorm main.py
           fi
 
       - name: Upload artifact

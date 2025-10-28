@@ -1,4 +1,4 @@
-from app.gui import start_gui
+from app import start_gui
 
 def main():
     start_gui()

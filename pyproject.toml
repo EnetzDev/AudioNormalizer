@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AudioNormalizer"
-version = "0.1.0"
+version = "0.1.1"
 description = "A user-friendly GUI application for batch audio normalization, allowing you to process large numbers of files quickly and efficiently."
 authors = ["Enetz Quindimil <enetzquindimil@gmail.com>"]
 readme = "README.md"

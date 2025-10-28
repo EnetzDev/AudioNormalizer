@@ -3,8 +3,19 @@ import shutil
 import tempfile
 import ctypes
 from ctypes import wintypes
+from pathlib import Path
 
-from app.core.utils import resource_path
+def resource_path(filename: str) -> str:
+    """
+    Returns the absolute path to a file in app/resources
+    """
+    # Directory of this utils.py file
+    current_dir = Path(__file__).resolve()
+
+    # Go up one level to 'app' and into 'resources'
+    resources_dir = current_dir.parent / "resources"
+
+    return str(resources_dir / filename)
 
 def windows_config(window):
         # --- PyInstaller-safe ctypes icon setup ---

@@ -2,6 +2,8 @@
 
 # 🎵 ANorm: Normalize Many Files Easily and Intuitively
 
+<div align="left">
+
 ## 📁 Project Architecture
 
 ```

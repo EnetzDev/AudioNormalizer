@@ -1,7 +1,12 @@
+<div align="center">
+
+# 🎵 ANorm: Normalize Many Files Easily and Intuitively
+
 ## 📁 Project Architecture
 
 ```
 AudioNormalizer/
+├── ⚡ Core System
 │   ├── .gitignore                     # 🚫 Git ignore rules
 │   ├── main.py                        # 🎯 Main program entry
 │   ├── pyproject.toml                 # ⚙️ Project configuration

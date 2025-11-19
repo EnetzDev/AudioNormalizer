@@ -1,10 +1,9 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton
-from PyQt6.QtGui import QFont, QPixmap, QPainter, QFontMetrics, QColor
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
+from PyQt6.QtGui import QFont, QPixmap
 
-from ...utils import resource_path
+from ...utils import resource_path  # keep your resource loader
 
-# Central widget containing background, label, and button
+# Central widget containing background, label, and buttons
 class CentralWidget(QWidget):
     def __init__(self):
         super().__init__()
@@ -15,20 +14,20 @@ class CentralWidget(QWidget):
         self.image_label.setScaledContents(True)
 
         # Version text
-        self.version_text_label = QLabel("v0.1.4", self)
-        self.version_text_label.setStyleSheet("background-color: transparent; font-weight: bold;")
+        self.version_text_label = QLabel("v0.1.5", self)
+        self.version_text_label.setStyleSheet(
+            "background-color: transparent; font-weight: bold;"
+        )
         self.version_text_label.setFont(QFont("Arial", 16))
 
-        # Analyze button
+        # Buttons
         self.analyze_button = QPushButton("Analyze Audio", self)
         self.analyze_button.setStyleSheet("background-color: transparent;")
 
-        # Normalize button
         self.normalize_button = QPushButton("Normalize Audio", self)
         self.normalize_button.setStyleSheet("background-color: transparent;")
 
-    # Resize event to reposition widgets
-    def resizeEvent(self, a0=None):
+    def resizeEvent(self, a0):
         size = self.size()
 
         # Center background image
@@ -36,36 +35,36 @@ class CentralWidget(QWidget):
         self.image_label.resize(img_width, img_height)
         self.image_label.move(
             (size.width() - img_width) // 2,
-            (size.height() - img_height) // 2
+            (size.height() - img_height) // 2,
         )
 
-        # Center label
+        # Center version label slightly above middle
+        self.version_text_label.adjustSize()
         self.version_text_label.move(
-            int((size.width() - self.version_text_label.width()) / 2),
-            int((size.height() - self.version_text_label.height()) / 2 + self.image_label.height() / 8)
+            (size.width() - self.version_text_label.width()) // 2,
+            (size.height() - self.version_text_label.height()) // 2
+            + self.image_label.height() // 8,
         )
 
-        # Center button below label
+        # Buttons below label
         btn_width, btn_height = 200, 50
         self.analyze_button.setGeometry(
             (size.width() - btn_width) // 2 - 100,
             (size.height() // 2) + 120,
             btn_width,
-            btn_height
+            btn_height,
         )
-
-        # Center button below label
         self.normalize_button.setGeometry(
             (size.width() - btn_width) // 2 + 100,
             (size.height() // 2) + 120,
             btn_width,
-            btn_height
+            btn_height,
         )
 
         super().resizeEvent(a0)
 
-# Start screen UI wrapper
+
+# UI wrapper for StartScreen
 class StartScreenUI:
-    def setup_ui(self, window):
+    def setup_ui(self):
         self.central_widget = CentralWidget()
-        window.setCentralWidget(self.central_widget)

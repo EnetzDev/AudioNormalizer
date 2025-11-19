@@ -1,10 +1,10 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt6.QtGui import QIcon, QPixmap
 
 from .gui.ui.start_ui import StartScreenUI
 from .gui.controllers.start_controller import StartScreenController
-from .utils import windows_config, resource_path
+from .utils import windows_config, resource_path, ScreenManager
 
 
 def start_gui():
@@ -14,7 +14,24 @@ def start_gui():
     window.setWindowTitle("ANorm")
     window.setStyleSheet("background-color: white;")
 
-    window.show()
+    # Create the stacked widget FIRST
+    stacked = QStackedWidget()
+    window.setCentralWidget(stacked)
+
+    # Set up the ScreenManager
+    manager = ScreenManager(stacked)
+
+    screens = [
+        ("start", StartScreenUI, StartScreenController),
+    ]
+
+    for name, UIClass, ControllerClass in screens:
+        ui = UIClass()
+        ui.setup_ui()
+        controller = ControllerClass(ui, manager)
+        manager.add_screen(name, ui.central_widget, controller)
+    
+    manager.show("start")
     window.showMaximized()
 
     if sys.platform == "win32":
@@ -23,12 +40,5 @@ def start_gui():
         app.setWindowIcon(QIcon(QPixmap(resource_path("favicon.icns"))))
     else:
         app.setWindowIcon(QIcon(QPixmap(resource_path("favicon.png"))))
-
-    # Set up the UI
-    ui = StartScreenUI()
-    ui.setup_ui(window)
-
-    # Connect UI with logic
-    controller = StartScreenController(ui)
 
     sys.exit(app.exec())

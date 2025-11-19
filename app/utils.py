@@ -53,3 +53,19 @@ def windows_config(window):
 
     # Set console title (optional)
     ctypes.windll.kernel32.SetConsoleTitleW("ANorm.exe")
+
+class ScreenManager:
+    def __init__(self, stacked_widget):
+        self.stacked = stacked_widget
+        self.screens = {}
+
+    def add_screen(self, name, widget, controller=None):
+        self.stacked.addWidget(widget)
+        self.screens[name] = {"widget": widget, "controller": controller}
+
+    def show(self, name):
+        screen = self.screens.get(name)
+        if screen:
+            self.stacked.setCurrentWidget(screen["widget"])
+        else:
+            print(f"Screen '{name}' not found")
